@@ -20,10 +20,10 @@ class Grass {
     }
 
     chooseCell(character) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
+        let found = [];
+        for (let i in this.directions) {
+            let x = this.directions[i][0];
+            let y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
                 if (matrix[y][x] == character) {
                     found.push(this.directions[i]);
@@ -50,7 +50,7 @@ class Grass {
 
     live() {
         this.age++
-        if (this.chooseCell(0).length == 0 && this.chooseCell(4).length > 0) {
+        if (this.chooseCell(4).length > 0) {
             this.mul(4)
         }
         else if (this.chooseCell(9).length > 0) {
@@ -88,7 +88,7 @@ class GrassEater {
     chooseCell(character) {
         this.getNewCoordinates()
         let found = [];
-        for (var i in this.directions) {
+        for (let i in this.directions) {
             let x = this.directions[i][0];
             let y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
@@ -173,13 +173,10 @@ class GrassEater {
 
     live() {
         this.age++
-        if (this.chooseCell(1).length == 0 && this.energy > 0 || this.chooseCell(9).length > 0) {
+        if (this.chooseCell(1).length == 0) {
             this.move()
         }
-        if (this.chooseCell(1).length > 0 || this.chooseCell(5).length > 0) {
-            if (this.chooseCell(5).length > 0 && this.chooseCell(1).length == 0) {
-                this.eat(5)
-            }
+        if (this.chooseCell(1).length > 0 ) {
             this.eat(1)
         }
         if (this.energy >= 5) {
@@ -220,10 +217,10 @@ class Predator {
 
     chooseCell(character) {
         this.getNewCoordinates()
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
+        let found = [];
+        for (let i in this.directions) {
+            let x = this.directions[i][0];
+            let y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
                 if (matrix[y][x] == character) {
                     found.push(this.directions[i]);
@@ -309,7 +306,7 @@ class Predator {
 
     live() {
         this.age++
-        if (this.chooseCell(2).length == 0 && this.energy > 0 || this.chooseCell(9).length > 0) {
+        if (this.chooseCell(2).length == 0) {
             if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
                 this.move(1)
             }
@@ -320,7 +317,6 @@ class Predator {
         if (this.chooseCell(2).length > 0) {
             if (this.chooseCell(4).length > 0) {
                 this.eat(4)
-                this.deathage += 10
             }
             else {
                 this.eat(2)

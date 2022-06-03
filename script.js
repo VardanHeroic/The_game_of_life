@@ -6,9 +6,21 @@ let predatorArr = [];
 let DeadgrasseaterArr = [];
 let DeadpredatorArr = [];
 let matLen = +prompt('Map length')
+let gr = +prompt('Grass Col')
+let grEat = +prompt('Grass Eater Col')
+let pred = +prompt('Predator Col')
 
 if (matLen == 0) {
     matLen = 20
+}
+if (gr == 0){
+    gr = 40
+}
+if (grEat == 0){
+    grEat = 36
+}
+if (pred == 0){
+    pred = 20
 }
 
 function findObj(value, Arr, name, object, ) {
@@ -59,7 +71,7 @@ function generateMatrix(matLen, gr, grEat, pred, ) {
 
 function setup() {
     frameRate(30);
-    generateMatrix(matLen, 40, 36, 20);
+    generateMatrix(matLen, gr, grEat, pred);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#646464');
     strokeWeight(0)
@@ -88,9 +100,6 @@ function draw() {
             }
             else if (matrix[y][x] == 4) {
                 fill('#787800')
-            }
-            else if (matrix[y][x] == 5) {
-                fill('#1f3000')
             }
             else {
                 fill('#646464')
