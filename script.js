@@ -121,3 +121,16 @@ function draw() {
     }
 }
 
+let body = document.body
+let button = body.firstElementChild
+button.onclick = function(){
+    grassArr = []
+    grasseaterArr = []
+    predatorArr = []
+    DeadgrasseaterArr = []
+    DeadpredatorArr = []
+    generateMatrix(matLen, gr, grEat, pred);
+    findObj(1, grassArr, 'gr', Grass);
+    findObj(2, grasseaterArr, 'gre', GrassEater);
+    findObj(3, predatorArr, ' pred', Predator)
+}
