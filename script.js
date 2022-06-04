@@ -1,4 +1,5 @@
-let side = 40;
+let side = 20;
+let delay = 1000;
 let matrix = [];
 let grassArr = [];
 let grasseaterArr = [];
@@ -14,7 +15,7 @@ if (matLen == 0) {
     matLen = 20
 }
 if (gr == 0){
-    gr = 40
+    gr = 40 
 }
 if (grEat == 0){
     grEat = 36
@@ -74,7 +75,7 @@ function setup() {
     generateMatrix(matLen, gr, grEat, pred);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#646464');
-    strokeWeight(0)
+    strokeWeight(0);
     findObj(1, grassArr, 'gr', Grass);
     findObj(2, grasseaterArr, 'gre', GrassEater);
     findObj(3, predatorArr, ' pred', Predator)
