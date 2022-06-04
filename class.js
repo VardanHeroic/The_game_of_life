@@ -306,6 +306,7 @@ class Predator {
 
     live() {
         this.age++
+
         if (this.chooseCell(2).length == 0) {
             if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
                 this.move(1)
@@ -314,17 +315,18 @@ class Predator {
                 this.move(0)
             }
         }
-        if (this.chooseCell(2).length > 0) {
-            if (this.chooseCell(4).length > 0) {
-                this.eat(4)
-            }
-            else {
-                this.eat(2)
-            }
+
+        if (this.chooseCell(4).length > 0) {    
+            this.eat(4);
         }
+        else if(this.chooseCell(2).length > 0){
+            this.eat(2);
+        }
+
         if (this.energy >= 7) {
             this.mul()
         }
+        
         if (this.energy == 0 || this.age >= this.deathage) {
             this.die()
         }
