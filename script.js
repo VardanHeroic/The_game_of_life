@@ -6,23 +6,11 @@ let grasseaterArr = [];
 let predatorArr = [];
 let DeadgrasseaterArr = [];
 let DeadpredatorArr = [];
-let matLen = +prompt('Map length')
-let gr = +prompt('Grass Col')
-let grEat = +prompt('Grass Eater Col')
-let pred = +prompt('Predator Col')
+let matLen = 20
+let gr = 40
+let grEat = 36
+let pred = 20
 
-if (matLen == 0) {
-    matLen = 20
-}
-if (gr == 0){
-    gr = 40 
-}
-if (grEat == 0){
-    grEat = 36
-}
-if (pred == 0){
-    pred = 20
-}
 
 function findObj(value, Arr, name, object, ) {
     for (let y = 0; y < matrix.length; y++) {
@@ -122,16 +110,31 @@ function draw() {
     }
 }
 
-let body = document.body
-let button = body.firstElementChild
+
+let button = document.querySelector('button')
 button.onclick = function(){
-    grassArr = []
-    grasseaterArr = []
-    predatorArr = []
-    DeadgrasseaterArr = []
-    DeadpredatorArr = []
+    matrix = [];
+    grassArr = [];
+    grasseaterArr = [];
+    predatorArr = [];
+    DeadgrasseaterArr = [];
+    DeadpredatorArr = [];
+
+    matLen = document.getElementById('matLen').value
+    gr = document.getElementById('gr').value
+    grEat = document.getElementById('grEat').value
+    pred = document.getElementById('pred').value
+
+    if (matLen <= 0) { matLen = 20 }
+    if (gr <= 0) { gr = 40 }
+    if (grEat <= 0) { grEat = 36 }
+    if (pred <= 0) { pred = 20 } 
+
     generateMatrix(matLen, gr, grEat, pred);
+    createCanvas(matrix[0].length * side, matrix.length * side);
+    strokeWeight(0);
     findObj(1, grassArr, 'gr', Grass);
     findObj(2, grasseaterArr, 'gre', GrassEater);
     findObj(3, predatorArr, ' pred', Predator)
+   
 }

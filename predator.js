@@ -1,45 +1,24 @@
-class Predator extends Living_Creature { 
+class Predator extends Animal { 
     constructor(x, y) {
         super(x,y)
         this.index = 3;
         this.energy = 6;
-        this.age = 1
         this.deathage = Math.floor(random(10000, 35000));
-    }
-
-    chooseCell(character) {
-        this.getNewCoordinates()
-        return super.chooseCell(character)
-    }
-
-    move(char) {
-        this.multiplay++
-        let newCell3 = random(this.chooseCell(char));
-        if (newCell3 && this.multiplay > delay) {
-            matrix[this.y][this.x] = 0
-            matrix[newCell3[1]][newCell3[0]] = 3
-            this.x = newCell3[0]
-            this.y = newCell3[1]
-            this.energy--
-            this.multiplay = 0
-        }
-
-
     }
 
 
     eat(char) {
         this.multiplay++
-        let newCell3 = random(this.chooseCell(char))
-        if (newCell3 && this.multiplay > delay) {
+        let newCell = random(super.chooseCell(char))
+        if (newCell && this.multiplay > delay) {
             matrix[this.y][this.x] = 0
-            matrix[newCell3[1]][newCell3[0]] = 3
-            this.x = newCell3[0]
-            this.y = newCell3[1]
-            this.energy += 3
+            matrix[newCell[1]][newCell[0]] = this.index
+            this.x = newCell[0]
+            this.y = newCell[1]
             this.multiplay = 0
+            this.energy += 3
             for (let i in grasseaterArr) {
-                if (newCell3[0] == grasseaterArr[i].x && newCell3[1] == grasseaterArr[i].y) {
+                if (newCell[0] == grasseaterArr[i].x && newCell[1] == grasseaterArr[i].y) {
                     grasseaterArr.splice(i, 1);
                     break;
                 }
@@ -47,12 +26,12 @@ class Predator extends Living_Creature {
         }
     }
 
-    mul() {
+    mul(char) {
         this.multiplay++
-        let newCell3 = random(this.chooseCell(0))
-        if (newCell3 && this.multiplay > delay) {
-            matrix[newCell3[1]][newCell3[0]] = 3
-            let pred = new Predator(newCell3[0], newCell3[1]);
+        let newCell = random(super.chooseCell(char))
+        if (newCell && this.multiplay > delay) {
+            matrix[newCell[1]][newCell[0]] = this.index
+            let pred = new Predator(newCell[0], newCell[1]);
             predatorArr.push(pred)
             this.energy = 3
             this.multiplay = 0
@@ -73,28 +52,16 @@ class Predator extends Living_Creature {
 
     }
 
-    getNewCoordinates() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
 
     live() {
         this.age++
 
         if (this.chooseCell(2).length == 0) {
             if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
-                this.move(1)
+                super.move(1)
             }
             else {
-                this.move(0)
+                super.move(0)
             }
         }
 
@@ -106,7 +73,12 @@ class Predator extends Living_Creature {
         }
 
         if (this.energy >= 7) {
-            this.mul()
+            if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
+                    this.mul(1)
+            }
+            else {
+                    this.mul(0)
+            }
         }
         
         if (this.energy == 0 || this.age >= this.deathage) {
