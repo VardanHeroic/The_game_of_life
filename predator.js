@@ -6,40 +6,8 @@ class Predator extends Animal {
         this.deathage = Math.floor(random(10000, 35000));
     }
 
-
-    eat(char) {
-        this.multiplay++
-        let newCell = random(super.chooseCell(char))
-        if (newCell && this.multiplay > delay) {
-            matrix[this.y][this.x] = 0
-            matrix[newCell[1]][newCell[0]] = this.index
-            this.x = newCell[0]
-            this.y = newCell[1]
-            this.multiplay = 0
-            this.energy += 3
-            for (let i in grasseaterArr) {
-                if (newCell[0] == grasseaterArr[i].x && newCell[1] == grasseaterArr[i].y) {
-                    grasseaterArr.splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
-
-    mul(char) {
-        this.multiplay++
-        let newCell = random(super.chooseCell(char))
-        if (newCell && this.multiplay > delay) {
-            matrix[newCell[1]][newCell[0]] = this.index
-            let pred = new Predator(newCell[0], newCell[1]);
-            predatorArr.push(pred)
-            this.energy = 3
-            this.multiplay = 0
-        }
-    }
-
     die() {
-        matrix[this.y][this.x] = 9;
+        matrix[this.y][this.x] = (this.index)**2;
         let dpred = new Predator(this.x, this.y)
         DeadpredatorArr.push(dpred)
         for (let i in predatorArr) {
@@ -66,23 +34,24 @@ class Predator extends Animal {
         }
 
         if (this.chooseCell(4).length > 0) {    
-            this.eat(4);
+            this.eat(4, 2,DeadgrasseaterArr);
         }
         else if(this.chooseCell(2).length > 0){
-            this.eat(2);
+            this.eat(2, 3,grasseaterArr);
         }
 
         if (this.energy >= 7) {
             if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
-                    this.mul(1)
+                    this.mul(1,Predator,predatorArr)
             }
             else {
-                    this.mul(0)
+                    this.mul(0,Predator,predatorArr)
             }
         }
         
-        if (this.energy == 0 || this.age >= this.deathage) {
-            this.die()
-        }
+        return super.live()
     }
+
 }
+
+    

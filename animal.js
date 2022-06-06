@@ -35,5 +35,41 @@ class Animal extends Living_Creature{
         }
     }
 
-    
+    mul(char, name, Arr) {
+        this.multiplay++
+        let newCell = random(super.chooseCell(char))
+        if (newCell && this.multiplay > delay) {
+            matrix[newCell[1]][newCell[0]] = this.index
+            let animal = new name(newCell[0], newCell[1]);
+            Arr.push(animal)
+            this.energy = 3
+            this.multiplay = 0
+        }
+    }
+
+    eat(char, newEnergy, victimArr) {
+        this.multiplay++
+        let newCell = random(super.chooseCell(char))
+        if (newCell && this.multiplay > delay) {
+            matrix[this.y][this.x] = 0
+            matrix[newCell[1]][newCell[0]] = this.index
+            this.x = newCell[0]
+            this.y = newCell[1]
+            this.multiplay = 0
+            this.energy + newEnergy
+            for (let i in victimArr) {
+                if (newCell[0] == victimArr[i].x && newCell[1] == victimArr[i].y) {
+                    victimArr.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    live() {
+
+        if (this.energy <= 0 || this.age >= this.deathage) {
+            this.die()
+        }
+    }
 }
