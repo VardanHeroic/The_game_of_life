@@ -1,3 +1,6 @@
+let Living_Creature = require('./living-creature')
+let delay = require('./variables').delay
+
 class Animal extends Living_Creature{
     constructor(x,y){
         super(x,y)
@@ -24,7 +27,8 @@ class Animal extends Living_Creature{
 
     move(char) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char));
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
@@ -37,7 +41,8 @@ class Animal extends Living_Creature{
 
     mul(char, name, Arr) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[newCell[1]][newCell[0]] = this.index
             let animal = new name(newCell[0], newCell[1]);
@@ -49,7 +54,8 @@ class Animal extends Living_Creature{
 
     eat(char, newEnergy, victimArr) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
@@ -73,3 +79,5 @@ class Animal extends Living_Creature{
         }
     }
 }
+
+module.exports = Animal

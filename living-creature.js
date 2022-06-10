@@ -1,5 +1,7 @@
+let matrix = require('./variables').matrix
+
 class Living_Creature{
-    constructor(x, y) {
+        constructor(x, y) {
         this.x = x;
         this.y = y;
         this.multiplay = 0;
@@ -30,3 +32,5 @@ class Living_Creature{
         } return found;
     }
 }
+
+module.exports = Living_Creature

@@ -1,18 +1,19 @@
-let side = 20;
-let delay = 1000;
-let matrix = [];
-let grassArr = [];
-let grasseaterArr = [];
-let predatorArr = [];
-let DeadgrasseaterArr = [];
-let DeadpredatorArr = [];
-let matLen = 20
-let gr = 40
-let grEat = 36
-let pred = 20
+let variables =  require('./variables')
+let matrix = variables.matrix;
+let grassArr = variables.grassArr;
+let grasseaterArr = variables.grasseaterArr;
+let predatorArr = variables.predatorArr;
+let matLen = variables.matLen;
+let gr = variables.gr;
+let grEat = variables.grEat;
+let pred = variables.pred;
 
 
-function findObj(value, Arr, name, object, ) {
+let Grass = require('./grass')
+let GrassEater = require('./grass-eater')
+let Predator = require('./predator')
+
+function findObj(value, Arr, object, ) {
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == value) {
@@ -56,85 +57,56 @@ function generateMatrix(matLen, gr, grEat, pred, ) {
     return matrix;
 }
 
-
-
-function setup() {
-    frameRate(30);
-    generateMatrix(matLen, gr, grEat, pred);
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    background('#646464');
-    strokeWeight(0);
-    findObj(1, grassArr, 'gr', Grass);
-    findObj(2, grasseaterArr, 'gre', GrassEater);
-    findObj(3, predatorArr, ' pred', Predator)
-
-
-
-}
 function draw() {
-
-    for (let y in matrix) {
-        for (let x in matrix[y]) {
-            if (matrix[y][x] == 1) {
-                fill("green");
-            }
-            else if (matrix[y][x] == 2) {
-                fill('yellow')
-            }
-            else if (matrix[y][x] == 3) {
-                fill('red')
-            }
-            else if (matrix[y][x] == 9) {
-                fill('#780800')
-            }
-            else if (matrix[y][x] == 4) {
-                fill('#787800')
-            }
-            else {
-                fill('#646464')
-            }
-            rect(x * side, y * side, side, side);
-
-            for (let i in grassArr) {
-                grassArr[i].live()
-            }
-            for (let i in grasseaterArr) {
-                grasseaterArr[i].live()
-            }
-            for (let i in predatorArr) {
-                predatorArr[i].live()
-            }
-
-        }
-
+    console.log(matrix);
+    for (let i in grassArr) {
+        grassArr[i].live()
     }
+    for (let i in grasseaterArr) {
+        grasseaterArr[i].live()
+    }
+    for (let i in predatorArr) {
+        predatorArr[i].live()
+    }
+
 }
 
 
-let button = document.querySelector('button')
-button.onclick = function(){
-    matrix = [];
-    grassArr = [];
-    grasseaterArr = [];
-    predatorArr = [];
-    DeadgrasseaterArr = [];
-    DeadpredatorArr = [];
+generateMatrix(matLen, gr, grEat, pred);
+findObj(1, grassArr, Grass);
+findObj(2, grasseaterArr, GrassEater);
+findObj(3, predatorArr, Predator)
+for (let i = 0; i < 49; i++) { draw()}
 
-    matLen = document.getElementById('matLen').value
-    gr = document.getElementById('gr').value
-    grEat = document.getElementById('grEat').value
-    pred = document.getElementById('pred').value
 
-    if (matLen <= 0) { matLen = 20 }
-    if (gr <= 0) { gr = 40 }
-    if (grEat <= 0) { grEat = 36 }
-    if (pred <= 0) { pred = 20 } 
+// let button = document.querySelector('button')
+// button.onclick = function(){
+//     matrix = [];
+//     grassArr = [];
+//     grasseaterArr = [];
+//     predatorArr = [];
+//     DeadgrasseaterArr = [];
+//     DeadpredatorArr = [];
 
-    generateMatrix(matLen, gr, grEat, pred);
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    strokeWeight(0);
-    findObj(1, grassArr, 'gr', Grass);
-    findObj(2, grasseaterArr, 'gre', GrassEater);
-    findObj(3, predatorArr, ' pred', Predator)
+//     matLen = document.getElementById('matLen').value
+//     gr = document.getElementById('gr').value
+//     grEat = document.getElementById('grEat').value
+//     pred = document.getElementById('pred').value
+
+//     if (matLen <= 0) { matLen = 20 }
+//     if (gr <= 0) { gr = 40 }
+//     if (grEat <= 0) { grEat = 36 }
+//     if (pred <= 0) { pred = 20 } 
+
+//     generateMatrix(matLen, gr, grEat, pred);
+//     createCanvas(matrix[0].length * side, matrix.length * side);
+//     strokeWeight(0);
+//     findObj(1, grassArr, 'gr', Grass);
+//     findObj(2, grasseaterArr, 'gre', GrassEater);
+//     findObj(3, predatorArr, ' pred', Predator)
    
-}
+// }
+
+console.log(grassArr.length);
+console.log(grasseaterArr.length);
+console.log(predatorArr.length)

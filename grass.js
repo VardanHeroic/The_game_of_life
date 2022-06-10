@@ -1,3 +1,7 @@
+let Living_Creature = require('./living-creature')
+let delay = require('./variables').delay
+let grassArr = require('./variables').grassArr
+
 class Grass extends Living_Creature {
     constructor(x, y) {
         super(x,y)
@@ -6,7 +10,8 @@ class Grass extends Living_Creature {
 
     mul(char) {
         this.multiplay++;
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay*1.5) {
             matrix[newCell[1]][newCell[0]] = 1
             let gr = new Grass(newCell[0], newCell[1]);
@@ -29,3 +34,5 @@ class Grass extends Living_Creature {
 
     }
 }
+
+module.exports = Grass

@@ -1,9 +1,15 @@
+let Animal = require('./animal.js')
+let grasseaterArr = require('./variables').grasseaterArr
+let DeadgrasseaterArr = require('./variables').DeadgrasseaterArr
+let predatorArr = require('./variables').predatorArr
+let DeadpredatorArr = require('./variables').DeadpredatorArr
+
 class Predator extends Animal { 
     constructor(x, y) {
         super(x,y)
         this.index = 3;
         this.energy = 6;
-        this.deathage = Math.floor(random(10000, 35000));
+        this.deathage = Math.floor(Math.random() * 25000) + 10000;
     }
 
     die() {
@@ -54,4 +60,4 @@ class Predator extends Animal {
 
 }
 
-    
+module.exports = Predator   
