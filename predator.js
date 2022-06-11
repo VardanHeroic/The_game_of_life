@@ -1,6 +1,5 @@
 let Animal = require('./animal.js')
 let grasseaterArr = require('./variables').grasseaterArr
-let DeadgrasseaterArr = require('./variables').DeadgrasseaterArr
 let predatorArr = require('./variables').predatorArr
 let DeadpredatorArr = require('./variables').DeadpredatorArr
 let matrix = require('./variables').matrix
@@ -13,8 +12,42 @@ class Predator extends Animal {
         this.deathage = Math.floor(Math.random() * 25000) + 10000;
     }
 
+
+    eat(char) {
+        this.multiplay++
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
+        if (newCell) {
+            matrix[this.y][this.x] = 0
+            matrix[newCell[1]][newCell[0]] = this.index
+            this.x = newCell[0]
+            this.y = newCell[1]
+            this.multiplay = 0
+            this.energy += 3
+            for (let i in grasseaterArr) {
+                if (newCell[0] == grasseaterArr[i].x && newCell[1] == grasseaterArr[i].y) {
+                    grasseaterArr.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    mul(char) {
+        this.multiplay++
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
+        if (newCell) {
+            matrix[newCell[1]][newCell[0]] = this.index
+            let pred = new Predator(newCell[0], newCell[1]);
+            predatorArr.push(pred)
+            this.energy = 3
+            this.multiplay = 0
+        }
+    }
+
     die() {
-        matrix[this.y][this.x] = (this.index)**2;
+        matrix[this.y][this.x] = 9;
         let dpred = new Predator(this.x, this.y)
         DeadpredatorArr.push(dpred)
         for (let i in predatorArr) {
@@ -41,24 +74,28 @@ class Predator extends Animal {
         }
 
         if (this.chooseCell(4).length > 0) {    
-            this.eat(4, 2,DeadgrasseaterArr);
+            this.eat(4);
         }
         else if(this.chooseCell(2).length > 0){
-            this.eat(2, 3,grasseaterArr);
+            this.eat(2);
         }
 
         if (this.energy >= 7) {
             if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
-                    this.mul(1,Predator,predatorArr)
+                    this.mul(1)
             }
             else {
-                    this.mul(0,Predator,predatorArr)
+                    this.mul(0)
             }
         }
         
-        return super.live()
+        if (this.energy == 0 || this.age >= this.deathage) {
+            this.die()
+        }
     }
-
 }
 
 module.exports = Predator   
+
+
+

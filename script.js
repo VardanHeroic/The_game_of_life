@@ -96,7 +96,8 @@ generateMatrix(matLen, gr, grEat, pred);
 findObj(1, grassArr, Grass);
 findObj(2, grasseaterArr, GrassEater);
 findObj(3, predatorArr, Predator)
-for (let i = 0; i < 1000; i++) { draw()}
+// for (let i = 0; i < 1000; i++) { draw()}
+setInterval(() => draw(), 50);
 console.log(grassArr.length);
 console.log(grasseaterArr.length);
 console.log(predatorArr.length)
