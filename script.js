@@ -7,8 +7,6 @@ let matLen = variables.matLen;
 let gr = variables.gr;
 let grEat = variables.grEat;
 let pred = variables.pred;
-
-
 let Grass = require('./grass')
 let GrassEater = require('./grass-eater')
 let Predator = require('./predator')
@@ -24,7 +22,6 @@ function findObj(value, Arr, object, ) {
         }
     }
 }
-
 
 function generateMatrix(matLen, gr, grEat, pred, ) {
     for (let i = 0; i < matLen; i++) {
@@ -58,55 +55,48 @@ function generateMatrix(matLen, gr, grEat, pred, ) {
 }
 
 function draw() {
-    console.log(matrix);
-    for (let i in grassArr) {
-        grassArr[i].live()
-    }
-    for (let i in grasseaterArr) {
-        grasseaterArr[i].live()
-    }
-    for (let i in predatorArr) {
-        predatorArr[i].live()
-    }
+    let display = matrix
 
+    for (let i in display) {
+        for (let j in  display[i]) {
+           String(display[i][j])
+           if(display[i][j] == 0)  {
+            display[i][j] =' '
+           }
+           if (display[i][j] == 1) {
+            display[i][j] = '!'
+           }
+           if (display[i][j] == 2) {
+            display[i][j] = '#'
+           }
+           if (display[i][j] == 3) {
+            display[i][j] = '@'
+           }
+           if (display[i][j] == 2 ** 2) {
+            display[i][j] = '+'
+           }
+           if (display[i][j] == 3 ** 2) {
+            display[i][j] = '-'
+           }          
+        }
+        display[i].join(' ')
+        console.log(`${display[i]}`)
+    }
+    console.log('\n');
+
+    for (let i in grassArr) { grassArr[i].live() }
+    for (let i in grasseaterArr) { grasseaterArr[i].live() }
+    for (let i in predatorArr) { predatorArr[i].live() }
 }
 
+
+    
 
 generateMatrix(matLen, gr, grEat, pred);
 findObj(1, grassArr, Grass);
 findObj(2, grasseaterArr, GrassEater);
 findObj(3, predatorArr, Predator)
-for (let i = 0; i < 49; i++) { draw()}
-
-
-// let button = document.querySelector('button')
-// button.onclick = function(){
-//     matrix = [];
-//     grassArr = [];
-//     grasseaterArr = [];
-//     predatorArr = [];
-//     DeadgrasseaterArr = [];
-//     DeadpredatorArr = [];
-
-//     matLen = document.getElementById('matLen').value
-//     gr = document.getElementById('gr').value
-//     grEat = document.getElementById('grEat').value
-//     pred = document.getElementById('pred').value
-
-//     if (matLen <= 0) { matLen = 20 }
-//     if (gr <= 0) { gr = 40 }
-//     if (grEat <= 0) { grEat = 36 }
-//     if (pred <= 0) { pred = 20 } 
-
-//     generateMatrix(matLen, gr, grEat, pred);
-//     createCanvas(matrix[0].length * side, matrix.length * side);
-//     strokeWeight(0);
-//     findObj(1, grassArr, 'gr', Grass);
-//     findObj(2, grasseaterArr, 'gre', GrassEater);
-//     findObj(3, predatorArr, ' pred', Predator)
-   
-// }
-
+for (let i = 0; i < 1000; i++) { draw()}
 console.log(grassArr.length);
 console.log(grasseaterArr.length);
 console.log(predatorArr.length)

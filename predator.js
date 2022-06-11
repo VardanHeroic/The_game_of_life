@@ -3,6 +3,7 @@ let grasseaterArr = require('./variables').grasseaterArr
 let DeadgrasseaterArr = require('./variables').DeadgrasseaterArr
 let predatorArr = require('./variables').predatorArr
 let DeadpredatorArr = require('./variables').DeadpredatorArr
+let matrix = require('./variables').matrix
 
 class Predator extends Animal { 
     constructor(x, y) {

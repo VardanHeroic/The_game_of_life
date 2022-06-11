@@ -1,6 +1,7 @@
 let Living_Creature = require('./living-creature')
 let delay = require('./variables').delay
 let grassArr = require('./variables').grassArr
+let matrix = require('./variables').matrix
 
 class Grass extends Living_Creature {
     constructor(x, y) {
@@ -12,7 +13,7 @@ class Grass extends Living_Creature {
         this.multiplay++;
         let empty = super.chooseCell(char)
         let newCell = empty[Math.floor(Math.random() * empty.length)]
-        if (newCell && this.multiplay > delay*1.5) {
+        if (newCell && this.multiplay > delay) {
             matrix[newCell[1]][newCell[0]] = 1
             let gr = new Grass(newCell[0], newCell[1]);
             grassArr.push(gr)

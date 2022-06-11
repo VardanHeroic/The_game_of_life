@@ -1,5 +1,5 @@
 let variables = {
-delay: 1000,
+delay: 10,
 matrix: [],
 grassArr: [],
 grasseaterArr: [],

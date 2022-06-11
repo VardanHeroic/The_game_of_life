@@ -1,5 +1,6 @@
 let Living_Creature = require('./living-creature')
 let delay = require('./variables').delay
+let matrix = require('./variables').matrix
 
 class Animal extends Living_Creature{
     constructor(x,y){
@@ -29,7 +30,7 @@ class Animal extends Living_Creature{
         this.multiplay++
         let empty = super.chooseCell(char)
         let newCell = empty[Math.floor(Math.random() * empty.length)]
-        if (newCell && this.multiplay > delay) {
+        if (newCell) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
             this.x = newCell[0]
@@ -43,7 +44,7 @@ class Animal extends Living_Creature{
         this.multiplay++
         let empty = super.chooseCell(char)
         let newCell = empty[Math.floor(Math.random() * empty.length)]
-        if (newCell && this.multiplay > delay) {
+        if (newCell) {
             matrix[newCell[1]][newCell[0]] = this.index
             let animal = new name(newCell[0], newCell[1]);
             Arr.push(animal)
@@ -56,7 +57,7 @@ class Animal extends Living_Creature{
         this.multiplay++
         let empty = super.chooseCell(char)
         let newCell = empty[Math.floor(Math.random() * empty.length)]
-        if (newCell && this.multiplay > delay) {
+        if (newCell) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
             this.x = newCell[0]
