@@ -1,3 +1,10 @@
+import Living_Creature from './living-creature.js'
+import variables from "./variables.js";
+
+let delay = variables.delay
+let grassArr = variables.grassArr
+let matrix = variables.matrix
+
 class Grass extends Living_Creature {
     constructor(x, y) {
         super(x,y)
@@ -6,7 +13,8 @@ class Grass extends Living_Creature {
 
     mul(char) {
         this.multiplay++;
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay*1.5) {
             matrix[newCell[1]][newCell[0]] = 1
             let gr = new Grass(newCell[0], newCell[1]);
@@ -29,3 +37,5 @@ class Grass extends Living_Creature {
 
     }
 }
+
+export default Grass

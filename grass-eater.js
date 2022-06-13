@@ -1,16 +1,25 @@
+import Animal from './animal.js'
+import variables from "./variables.js";
+let grassArr = variables.grassArr
+let grasseaterArr = variables.grasseaterArr
+let DeadgrasseaterArr = variables.DeadgrasseaterArr
+let matrix = variables.matrix
+let delay = variables.delay
+
 class GrassEater extends Animal {
     constructor(x, y) {
         super(x, y)
         this.index = 2;
         this.energy = 5;
-        this.deathage = Math.floor(random(5000, 40000));
+        this.deathage = Math.floor(Math.random() * 35000) + 5000;
 
     }
 
 
     eat(char) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
@@ -29,7 +38,8 @@ class GrassEater extends Animal {
 
     mul(char) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[newCell[1]][newCell[0]] = this.index
             let gre = new GrassEater(newCell[0], newCell[1]);
@@ -56,7 +66,6 @@ class GrassEater extends Animal {
 
     live() {
         this.age++
-
         if (this.chooseCell(1).length == 0) {
             super.move(0)
         }
@@ -76,6 +85,9 @@ class GrassEater extends Animal {
 
         if (this.energy == 0 || this.age >= this.deathage) {
             this.die()
+            
         }
     }
 }
+
+export default GrassEater

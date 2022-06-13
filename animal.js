@@ -1,3 +1,8 @@
+import Living_Creature from './living-creature.js'
+import variables from "./variables.js";
+let delay = variables.delay
+let matrix = variables.matrix
+
 class Animal extends Living_Creature{
     constructor(x,y){
         super(x,y)
@@ -24,7 +29,8 @@ class Animal extends Living_Creature{
 
     move(char) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char));
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
@@ -34,6 +40,6 @@ class Animal extends Living_Creature{
             this.multiplay = 0
         }
     }
-
-    
 }
+
+export default Animal

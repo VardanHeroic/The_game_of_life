@@ -1,15 +1,25 @@
+import Animal from './animal.js'
+import variables from "./variables.js";
+let grasseaterArr = variables.grasseaterArr
+let predatorArr = variables.predatorArr
+let DeadpredatorArr = variables.DeadpredatorArr
+let matrix = variables.matrix
+let delay = variables.delay
+
+
 class Predator extends Animal { 
     constructor(x, y) {
         super(x,y)
         this.index = 3;
         this.energy = 6;
-        this.deathage = Math.floor(random(10000, 35000));
+        this.deathage = Math.floor(Math.random() * 25000) + 10000;
     }
 
 
     eat(char) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[this.y][this.x] = 0
             matrix[newCell[1]][newCell[0]] = this.index
@@ -28,7 +38,8 @@ class Predator extends Animal {
 
     mul(char) {
         this.multiplay++
-        let newCell = random(super.chooseCell(char))
+        let empty = super.chooseCell(char)
+        let newCell = empty[Math.floor(Math.random() * empty.length)]
         if (newCell && this.multiplay > delay) {
             matrix[newCell[1]][newCell[0]] = this.index
             let pred = new Predator(newCell[0], newCell[1]);
@@ -86,3 +97,5 @@ class Predator extends Animal {
         }
     }
 }
+
+export default Predator 

@@ -1,3 +1,5 @@
+import variables from "./variables.js";
+let matrix = variables.matrix
 class Living_Creature{
     constructor(x, y) {
         this.x = x;
@@ -30,3 +32,5 @@ class Living_Creature{
         } return found;
     }
 }
+
+export default Living_Creature
