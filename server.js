@@ -1,31 +1,34 @@
-// import express from "express";
-// import http from "http";
-// import { Server } from "socket.io";
-// import fs from 'fs'
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import fs from 'fs'
+
 import variables from './variables.js'
 import Grass from './grass.js';
 import GrassEater from './grass-eater.js';
 import Predator from './predator.js';
 
-// let app = express();
-// let server = http.createServer(app);
-// let io = new Server(server);
+let app = express();
+let server = http.createServer(app);
+let io = new Server(server);
 
 let matrix = variables.matrix;
-let matLen = variables.matLen;
-let gr = variables.gr;
-let grEat = variables.grEat;
-let pred = variables.pred;
+let matLen = 20;
+let gr = 40;
+let grEat = 36;
+let pred = 20;
 let grassArr = variables.grassArr;
 let grasseaterArr = variables.grasseaterArr;
 let predatorArr = variables.predatorArr;
+let DeadgrasseaterArr = variables.DeadgrasseaterArr
+let DeadpredatorArr = variables.DeadpredatorArr
+app.use(express.static("."));
 
-// app.use(express.static("."));
-
-// app.get('/', function (req, res) {
-//     res.redirect('index.html');
-// });
-// server.listen(3000);
+app.get('/', function (req, res) {
+    res.redirect('index.html');
+});
+server.listen(3000);
+console.log('Port: 3000');
 
 function findObj(matrix) {
     for (var y = 0; y < matrix.length; y++) {
@@ -45,7 +48,7 @@ function findObj(matrix) {
             }
         }
     }
-    // io.sockets.emit('send matrix', matrix)
+    io.sockets.emit('send matrix', matrix)
 }
 
 
@@ -78,31 +81,60 @@ function generateMatrix(matLen, gr, grEat, pred, ) {
             matrix[x][y] = 3;
         }
     }
+    io.sockets.emit('send matrix', matrix)
     return matrix;
 }
 
 function play() {
-    let display = matrix
-    for (let i in display) {
-        for (let j in  display[i]) { String(display[i][j]) }
-        console.log(`${display[i]}`)
-    }
+    for (let i in matrix) { console.log(`${matrix[i]}`) }
     console.log('\n');
 
     for (let i in grassArr) { grassArr[i].live() }
     for (let i in grasseaterArr) { grasseaterArr[i].live() }
     for (let i in predatorArr) { predatorArr[i].live() }
     
-    // io.sockets.emit("send matrix", matrix);
+    io.sockets.emit("send matrix", matrix);
 }
 
-generateMatrix(matLen, gr, grEat, pred)
-// io.sockets.emit('send matrix', matrix)
-findObj(matrix)
-setInterval(play, 1000)
-// io.on('connection', function (socket) {
+
+function restart(inputData){
+        
+        grassArr = [];
+        grasseaterArr = [];
+        predatorArr = [];
+        DeadgrasseaterArr = [];
+        DeadpredatorArr = [];
     
-// })
+        // matLen = inputData.matLen
+        // gr = inputData.gr
+        // grEat = inputData.grEat
+        // pred = inputData.pred
+    
+        // if (matLen < 0) { matLen = 20 }
+        // if (gr < 0) { gr = 40 }
+        // if (grEat < 0) { grEat = 36 }
+        // if (pred < 0) { pred = 20 } 
+        
+        generateMatrix(matLen, gr, grEat, pred);
+        console.log(matLen);
+        findObj(matrix);
+        io.sockets.emit("send matrix", matrix);
+        
+    }
+
+
+generateMatrix(matLen, gr, grEat, pred);
+
+io.on('connection', (socket) => {
+    io.sockets.emit("send matrix", matrix);
+    findObj(matrix)
+    socket.on("button pressed",(inputData) =>{
+        restart(inputData)
+      
+
+    })
+})
+setInterval(play, 1000)
 
 
 

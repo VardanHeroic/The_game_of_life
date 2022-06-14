@@ -1,5 +1,4 @@
 let variables = {
-    side: 20,
     delay: 1,
     matrix: [],
     grassArr: [],
@@ -7,11 +6,6 @@ let variables = {
     predatorArr: [],
     DeadgrasseaterArr: [],
     DeadpredatorArr: [],
-    matLen: 20,
-    gr: 40,
-    grEat: 36,
-    pred: 20,
-
 }
 
 
