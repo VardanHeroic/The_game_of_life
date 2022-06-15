@@ -56,5 +56,5 @@ button.onclick = restart
 
 
 setInterval(
-    () => { socket.on('send matrix', produce) },1000
+    () => { socket.on('send matrix', produce) },250
 )

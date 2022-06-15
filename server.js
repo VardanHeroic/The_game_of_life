@@ -15,13 +15,22 @@ let io = new Server(server);
 let matrix = variables.matrix;
 let matLen = 20;
 let gr = 40;
-let grEat = 36;
+let grEat = 35 ;
 let pred = 20;
 let grassArr = variables.grassArr;
 let grasseaterArr = variables.grasseaterArr;
 let predatorArr = variables.predatorArr;
 let DeadgrasseaterArr = variables.DeadgrasseaterArr
 let DeadpredatorArr = variables.DeadpredatorArr
+let stats = {
+    maxGrass: grassArr.length,
+    maxGrasseater:grasseaterArr.length,
+    maxPredator: predatorArr.length,
+    maxDeadgrassater: DeadgrasseaterArr.length,
+    maxDeadpredator: DeadpredatorArr.length,
+}
+let i = 0
+
 app.use(express.static("."));
 
 app.get('/', function (req, res) {
@@ -86,6 +95,8 @@ function generateMatrix(matLen, gr, grEat, pred, ) {
 }
 
 function play() {
+    i++
+
     for (let i in matrix) { console.log(`${matrix[i]}`) }
     console.log('\n');
 
@@ -94,10 +105,23 @@ function play() {
     for (let i in predatorArr) { predatorArr[i].live() }
     
     io.sockets.emit("send matrix", matrix);
+
+    if (grassArr.length > stats.maxGrass) { stats.maxGrass = grassArr.length }
+    if (grasseaterArr.length > stats.maxGrasseater) { stats.maxGrasseater = grasseaterArr.length }
+    if (predatorArr.length > stats.maxPredator) { stats.maxPredator = predatorArr.length }
+    if (DeadgrasseaterArr.length > stats.maxDeadgrassater) { stats.maxDeadgrassater = DeadgrasseaterArr.length }
+    if (DeadpredatorArr.length > stats.maxDeadpredator) { stats.maxDeadpredator = DeadpredatorArr.length }
+
     console.log(grassArr.length);
     console.log(grasseaterArr.length)
     console.log(predatorArr.length);
-}
+
+    if(i == 60){ 
+        let JSONstats = JSON.stringify(stats); 
+        fs.writeFileSync('stats.json',JSONstats)
+    }
+    
+}   
 
 
 function restart(inputData){
@@ -127,17 +151,17 @@ function restart(inputData){
 
 
 generateMatrix(matLen, gr, grEat, pred);
-
-io.on('connection', (socket) => {
-    io.sockets.emit("send matrix", matrix);
-    findObj(matrix)
-    socket.on("button pressed",(inputData) =>{
-        restart(inputData)
+findObj(matrix)
+// io.on('connection', (socket) => {
+//     io.sockets.emit("send matrix", matrix);
+//     
+//     socket.on("button pressed",(inputData) =>{
+//         restart(inputData)
       
 
-    })
-})
-setInterval(play, 1000)
+//     })
+// }) 
+setInterval(play, 250)
 
 
 
