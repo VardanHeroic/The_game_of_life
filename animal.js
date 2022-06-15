@@ -2,6 +2,7 @@ import Living_Creature from './living-creature.js'
 import variables from "./variables.js";
 let delay = variables.delay
 let matrix = variables.matrix
+let grassArr = variables.grassArr
 
 class Animal extends Living_Creature{
     constructor(x,y){
@@ -38,6 +39,14 @@ class Animal extends Living_Creature{
             this.y = newCell[1]
             this.energy--
             this.multiplay = 0
+            if (char == 1 ) {
+                for (let i in grassArr) {
+                    if (newCell[0] == grassArr[i].x && newCell[1] == grassArr[i].y) {
+                        grassArr.splice(i, 1);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

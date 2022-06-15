@@ -1,5 +1,6 @@
 import Animal from './animal.js'
 import variables from "./variables.js";
+let grassArr = variables.grassArr
 let grasseaterArr = variables.grasseaterArr
 let predatorArr = variables.predatorArr
 let DeadpredatorArr = variables.DeadpredatorArr
@@ -12,7 +13,7 @@ class Predator extends Animal {
         super(x,y)
         this.index = 3;
         this.energy = 6;
-        this.deathage = Math.floor(Math.random() * 25000) + 10000;
+        this.deathage = Math.floor(Math.random() * 2500) + 1000;
     }
 
 
@@ -46,6 +47,14 @@ class Predator extends Animal {
             predatorArr.push(pred)
             this.energy = 3
             this.multiplay = 0
+            if (char == 1 ) {
+                for (let i in grassArr) {
+                    if (newCell[0] == grassArr[i].x && newCell[1] == grassArr[i].y) {
+                        grassArr.splice(i, 1);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -66,6 +75,15 @@ class Predator extends Animal {
 
     live() {
         this.age++
+        if (this.energy >= 7) {
+            if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
+                    this.mul(1)
+            }
+            else {
+                    this.mul(0)
+            }
+        }
+
 
         if (this.chooseCell(2).length == 0) {
             if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
@@ -81,15 +99,6 @@ class Predator extends Animal {
         }
         else if(this.chooseCell(2).length > 0){
             this.eat(2);
-        }
-
-        if (this.energy >= 7) {
-            if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
-                    this.mul(1)
-            }
-            else {
-                    this.mul(0)
-            }
         }
         
         if (this.energy == 0 || this.age >= this.deathage) {

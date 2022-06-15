@@ -94,6 +94,9 @@ function play() {
     for (let i in predatorArr) { predatorArr[i].live() }
     
     io.sockets.emit("send matrix", matrix);
+    console.log(grassArr.length);
+    console.log(grasseaterArr.length)
+    console.log(predatorArr.length);
 }
 
 

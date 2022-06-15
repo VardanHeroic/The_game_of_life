@@ -46,6 +46,14 @@ class GrassEater extends Animal {
             grasseaterArr.push(gre)
             this.energy = 3
             this.multiplay = 0
+            if (char == 1 ) {
+                for (let i in grassArr) {
+                    if (newCell[0] == grassArr[i].x && newCell[1] == grassArr[i].y) {
+                        grassArr.splice(i, 1);
+                        break;
+                    }
+                }
+            }
         }
 
 
@@ -66,6 +74,15 @@ class GrassEater extends Animal {
 
     live() {
         this.age++
+        if (this.energy >= 5) {
+            if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
+                this.mul(1)
+            }
+            else if(this.chooseCell(0) > 0){
+                this.mul(0)
+            }
+        }
+
         if (this.chooseCell(1).length == 0) {
             super.move(0)
         }
@@ -74,14 +91,7 @@ class GrassEater extends Animal {
             this.eat(1)
         }
 
-        if (this.energy >= 5) {
-            if (this.chooseCell(0).length == 0 && this.chooseCell(1).length > 0) {
-                this.mul(1)
-            }
-            else {
-                this.mul(0)
-            }
-        }
+        
 
         if (this.energy == 0 || this.age >= this.deathage) {
             this.die()
