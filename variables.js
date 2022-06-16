@@ -1,12 +1,5 @@
-let variables = {
-    delay: 1,
+let variables ={
     matrix: [],
-    grassArr: [],
-    grasseaterArr: [],
-    predatorArr: [],
-    DeadgrasseaterArr: [],
-    DeadpredatorArr: [],
+    allArr: [],
 }
-
-
 export default variables
