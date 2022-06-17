@@ -36,7 +36,7 @@ function findObj() {
             allArr.push(name);
         }
     }
-    io.sockets.emit("send matrix", matrix);
+    // io.sockets.emit("send matrix", matrix);
 }
 
 
@@ -54,7 +54,7 @@ function generateMatrix(matLen, cellCol) {
             matrix[x][y] = 1;
         }
     }
-    io.sockets.emit("send matrix", matrix);
+    // io.sockets.emit("send matrix", matrix); 
     return matrix;
 }
 
@@ -71,7 +71,21 @@ function play() {
     io.sockets.emit("send matrix", matrix);
 }
 
-generateMatrix(25,200)
+
+function restart(inputData){
+    allArr = []
+    let matLen = inputData.matLen
+    let cellCol = inputData.cellCol
+
+    if (matLen < 0) { matLen = 25 }
+    if (cellCol < 0) { gr = 200 }
+    findObj()
+    generateMatrix(matLen, cellCol);
+    io.sockets.emit("send matrix", matrix);
+}
+
+
+generateMatrix(30,450)
 
 
 io.on('connection', (socket) => {
@@ -82,4 +96,4 @@ io.on('connection', (socket) => {
     // })
 }) 
 
-setInterval(play, 250)
+setInterval(play, 1000)
