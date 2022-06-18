@@ -74,14 +74,15 @@ function play() {
 
 function restart(inputData){
     allArr = []
+    matrix = []
     let matLen = inputData.matLen
     let cellCol = inputData.cellCol
-
+    
     if (matLen < 0) { matLen = 25 }
     if (cellCol < 0) { gr = 200 }
-    findObj()
     generateMatrix(matLen, cellCol);
-    io.sockets.emit("send matrix", matrix);
+    findObj();
+    io.sockets.emit("restart matrix", matrix);
 }
 
 
@@ -91,9 +92,9 @@ generateMatrix(30,450)
 io.on('connection', (socket) => {
     io.sockets.emit("send matrix", matrix);
     findObj()
-    // socket.on("button pressed",(inputData) =>{
-    //     restart(inputData)
-    // })
+    socket.on("button pressed",(inputData) =>{
+        restart(inputData)
+    })
 }) 
 
 setInterval(play, 1000)
