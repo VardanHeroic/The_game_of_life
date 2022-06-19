@@ -13,6 +13,8 @@ let io = new Server(server);
 
 let matrix =variables.matrix
 let allArr = variables.allArr
+let matLen = 30
+let cellCol = 450
 
 app.use(express.static("."));
 app.get('/', function (req, res) {
@@ -22,7 +24,7 @@ server.listen(3000);
 console.log('Port: 3000');
 
 
-function findObj() {
+function findObj(matrix) {
     let value = 0;
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
@@ -36,7 +38,7 @@ function findObj() {
             allArr.push(name);
         }
     }
-    // io.sockets.emit("send matrix", matrix);
+    io.sockets.emit("send matrix", matrix);
 }
 
 
@@ -54,7 +56,7 @@ function generateMatrix(matLen, cellCol) {
             matrix[x][y] = 1;
         }
     }
-    // io.sockets.emit("send matrix", matrix); 
+    io.sockets.emit("send matrix", matrix); 
     return matrix;
 }
 
@@ -74,24 +76,19 @@ function play() {
 
 function restart(inputData){
     allArr = []
-    matrix = []
-    let matLen = inputData.matLen
-    let cellCol = inputData.cellCol
-    
-    if (matLen < 0) { matLen = 25 }
-    if (cellCol < 0) { gr = 200 }
+    matLen = inputData.matLen
+    cellCol = inputData.cellCol
     generateMatrix(matLen, cellCol);
-    findObj();
-    io.sockets.emit("restart matrix", matrix);
+    findObj(matrix);
+    io.sockets.emit("send matrix", matrix);
 }
 
 
-generateMatrix(30,450)
-
+generateMatrix(matLen,cellCol)
+findObj(matrix)
 
 io.on('connection', (socket) => {
     io.sockets.emit("send matrix", matrix);
-    findObj()
     socket.on("button pressed",(inputData) =>{
         restart(inputData)
     })

@@ -2,7 +2,7 @@ let side = 10;
 let socket = io();
 let inputData = {
     matLen: 30,
-    cellCol: 500,
+    cellCol: 450,
 }
 let button = document.querySelector('button')
 
@@ -26,18 +26,15 @@ function produce(matrix) {
 }
 
 function restart() {
-    inputData = {
-        matLen: document.getElementById('matLen').value,
-        cellCol: document.getElementById('cellCol').value,
-    }
     socket.emit("button pressed", inputData);
 }
-button.addEventListener('click',restart)
 
-socket.on('restart matrix',() => {
-    // remove()
-    createCanvas(30 * side, 30 * side);
-    background('#646464');
-})
+button.onclick = restart
+
+// socket.on('restart matrix',() => {
+//     // remove()
+//     createCanvas(25 * side, 25 * side);
+//     background('#646464');
+// })
 
 setInterval( () => { socket.on('send matrix', produce) },1000 )
