@@ -2,6 +2,11 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
+.elm-img {
+    width: 132px;
+    height: 132px;
+}
+
 button{
     font-family: 'Roboto', sans-serif;
     border:none;

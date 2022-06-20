@@ -6,7 +6,6 @@ class Cell {
         this.x = x;
         this.y = y;
         this.index = index;
-        this.multiplay = 1;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -22,7 +21,7 @@ class Cell {
 
     chooseCell(character) {
         let found = [];
-        for (var i in this.directions) {
+        for (let i in this.directions) {
             let x = this.directions[i][0];
             let y = this.directions[i][1];
             if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
@@ -43,18 +42,17 @@ class Cell {
         case 0:
             this.index = 1;
             break; 
-
+        }
     }
-}
+
     findIndex() {
         matrix[this.y][this.x] = this.index
     }
     
     live() {
-        this.multiplay++
         switch (this.index) {
             case 0:
-                if(this.chooseCell(1).length == 3){
+                if(this.chooseCell(1).length == 3 ){
                     this.change();
                 }
                 break;

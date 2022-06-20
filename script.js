@@ -1,4 +1,4 @@
-let side = 10;
+let side = 20;
 let socket = io();
 let inputData = {
     matLen: 30,
@@ -28,13 +28,6 @@ function produce(matrix) {
 function restart() {
     socket.emit("button pressed", inputData);
 }
-
 button.onclick = restart
 
-// socket.on('restart matrix',() => {
-//     // remove()
-//     createCanvas(25 * side, 25 * side);
-//     background('#646464');
-// })
-
-setInterval( () => { socket.on('send matrix', produce) },1000 )
+setInterval( () => { socket.on('send matrix', produce) },500 )

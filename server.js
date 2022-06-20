@@ -2,15 +2,12 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import fs from 'fs'
-
 import variables from './variables.js'
 import Cell from './class.js';
-
 
 let app = express();
 let server = http.createServer(app);
 let io = new Server(server);
-
 let matrix =variables.matrix
 let allArr = variables.allArr
 let matLen = 30
@@ -22,7 +19,6 @@ app.get('/', function (req, res) {
 });
 server.listen(3000);
 console.log('Port: 3000');
-
 
 function findObj(matrix) {
     let value = 0;
@@ -38,9 +34,7 @@ function findObj(matrix) {
             allArr.push(name);
         }
     }
-    io.sockets.emit("send matrix", matrix);
 }
-
 
 function generateMatrix(matLen, cellCol) {
     for (let i = 0; i < matLen; i++) {
@@ -56,7 +50,6 @@ function generateMatrix(matLen, cellCol) {
             matrix[x][y] = 1;
         }
     }
-    io.sockets.emit("send matrix", matrix); 
     return matrix;
 }
 
@@ -83,15 +76,12 @@ function restart(inputData){
     io.sockets.emit("send matrix", matrix);
 }
 
-
 generateMatrix(matLen,cellCol)
 findObj(matrix)
-
 io.on('connection', (socket) => {
     io.sockets.emit("send matrix", matrix);
     socket.on("button pressed",(inputData) =>{
         restart(inputData)
     })
 }) 
-
-setInterval(play, 1000)
+setInterval(play,500)
